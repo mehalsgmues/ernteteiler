@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form _self %}
+
+{% block form_errors %}
+    {% if errors %}
+    <ul>
+        {% for error in errors %}
+        <li class="error">{{ error.message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+{% if loggedIn %}
+<h1>Steckbrief bearbeiten</h1>
+{% if form_success %}
+<div class="notification">Änderungen wurden gespeichert!</div>
+{% endif %}
+{% else %}
+<h1>Der Ernteteiler <small style="font-size: 12pt">von meh als gmües</small></h1>
+<p>Hallo Gmüesli.</p>
+<p>Der Ernteteiler wird dir dabei helfen, Gleichgesinnte zu finden, mit denen du deinen Ernteanteil bei meh als gmües teilen kannst. Wenn du neu hier bist, brauchst du erst einmal einen Steckbrief, damit die Anderen wissen, auf was sie sich da einlassen ;-). Danach kannst du auch die Steckbriefe der Anderen ansehen.<br>
+Falls du schon einen Steckbrief hast, kannst du dich über den Link einloggen, den du per E-mail erhalten hast. Ganz unten kannst du dir den Link erneut zusenden lassen, wenn du ihn verloren hast.</p>
+<p>Viel Spass beim Teilen!</p>
+
+<h1>Erstelle einen Steckbrief</h1>
+<p>Erstelle deinen Steckbrief um die anderen Steckbriefe sehen zu können. Oder logge dich unten ein, wenn du schon einen Steckbrief erstellt hast.</p>
+{% endif %}
+{{ form_start(form) }}
+
+    {{ form_errors(form) }}
+
+    <div>
+        {{ form_label(form.name) }}
+        <small>Der Vorname reicht.</small>
+        {{ form_errors(form.name) }}
+        {{ form_widget(form.name) }}
+    </div>
+
+    <div>
+        {{ form_label(form.email, 'E-Mail') }}
+        <small>Wird nicht veröffentlicht.</small>
+        {{ form_errors(form.email) }}
+        {{ form_widget(form.email) }}
+    </div>
+    
+    <div>
+        {{ form_label(form.description, 'Beschreibung') }}
+        <small>
+        Die Beschreibung sollte folgende Informationen enthalten:<br>
+        <ul>
+            <li>Depot von welchem du dein Gemüse beziehen willst. (Garten oder Hunziker-Areal)</li>
+            <li>Dein ungefährer Wohnort (nächste Tram-/Bushaltestelle).</li>
+            <li>Mit wievielen Leuten möchtest du wieviele Ernteanteile teilen?</li>
+            <li>Wie möchtest du die Ernteanteile teilen? (z.B. Jede Woche abwechseln.)</li>
+            <li>Gemüse auf das du gerne verzichtest.</li>
+            <li>Gemüse auf das du auf keinen Fall verzichten willst.</li>
+            <li>Wie möchtest du die Kosten aufteilen?</li>
+        </ul>
+        </small>
+        {{ form_errors(form.description) }}
+        {{ form_widget(form.description) }}
+    </div>
+
+    <div>
+        {{ form_widget(form.create) }}
+    </div>
+
+{{ form_end(form) }}
+
+{% if loggedIn %}
+<a class="button" href="{{ path('homepage') }}">Zurück zur Übersicht</a>
+<h1>Steckbrief löschen</h1>
+<a class="button red" href="{{ path('profile_delete') }}">Steckbrief löschen</a>
+{% endif %}
+
+{% if not loggedIn %}
+<h1>Einloggen</h1>
+<p>Wenn du bereits einen Steckbrief erstellt hast, kannst du dich über den Link im E-mail, das du erhalten hast, einloggen.</p>
+<p>Hast du das E-mail verloren kannst du es erneut senden an: </p>
+
+{{ form_start(login_form) }}
+
+    {{ form_errors(login_form) }}
+
+    <div>
+        {{ form_label(login_form.email, 'E-Mail') }}
+        {{ form_errors(login_form.email) }}
+        {{ form_widget(login_form.email) }}
+    </div>
+
+    <div>
+        {{ form_widget(login_form.send) }}
+    </div>
+
+{{ form_end(login_form) }}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>Steckbrief Löschen</h1>
+<p>Hiermit wird dein Steckbrief endgültig gelöscht. Dadurch kannst du auch keine anderen Steckbriefe mehr lesen.</p>
+
+{{ form_start(form) }}
+
+    {{ form_errors(form) }}
+    
+    <div>
+        {{ form_errors(form.confirm) }}
+        {{ form_widget(form.confirm) }}
+        {{ form_label(form.confirm, 'Ich weiss, was ich tue') }}
+    </div>
+
+{{ form_widget(form) }}
+
+{{ form_end(form) }}
+<a class="button" href="{{ path('profile_update') }}">Steckbrief behalten</a>
+{% endblock %}

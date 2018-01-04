@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>{{ profile.name }}</h1>
+<p>{{ profile.description|nl2br }}</p>
+<br>
+<a class="button" href="{{ path('homepage') }}">Zurück</a>
+
+{% if(message_sent) %}
+<p class="notification">Nachricht erfolgreich gesendet.</p>
+{% else %}
+{{ form_start(contact) }}
+
+    {{ form_errors(contact) }}
+    
+    <div>
+        {{ form_label(contact.message, 'Sende eine Nachricht an ' ~ profile.name) }}
+        <small>Deine Email-Adresse und dein Steckbrief werden an {{ profile.name }} mitgesendet.</small>
+        {{ form_errors(contact.message) }}
+        {{ form_widget(contact.message) }}
+    </div>
+
+{{ form_widget(contact) }}
+{{ form_end(contact) }}
+
+{% endif %}
+{% endblock %}

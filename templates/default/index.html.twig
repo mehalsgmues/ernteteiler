@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>Ernteteiler</h1>
+<h2>Hallo {{ user.name }}</h2>
+{% if not user.admin %}
+<a class="button" href="{{ path('profile_update') }}">Deinen Steckbrief bearbeiten</a>
+{% endif %}
+<a class="button" href="{{ path('logout') }}">Abmelden</a>
+<h2>Steckbriefe</h2>
+Klicke auf einen Steckbrief um die Person zu kontaktieren.
+{% for profile in profiles %}
+{% if not profile.admin %}
+{% if profile.id == user.id %}
+<div class="profile-list-element profile-list-element-self">
+    <a href="{{ path('profile_update') }}">
+    <small style="font-style: italic;">Dein Steckbrief:</small><br>
+{% else %}
+<div class="profile-list-element">
+    <a href="{{ path('profile_contact', {'id': profile.id}) }}">
+{% endif %}
+        <b>{{ profile.name }}</b>:<br> {{ profile.description|length > 200 ? (profile.description|slice(0, 200) ~ '...')|nl2br : profile.description|nl2br }}
+    </a>
+</div>
+{% endif %}
+{% endfor %}
+
+{% endblock %}

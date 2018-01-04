@@ -1,0 +1,179 @@
+body {
+    margin: 0;
+    font-family: 'Dosis', sans-serif;
+    background-color: #85de90;
+}
+
+span.avoidwrap {
+    display: inline-block;
+}
+
+h1, .h1 {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+h2, .h2, label {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+h3, .h3 {
+    font-size: 1.17em;
+    font-weight: bold;
+}
+
+form {
+    margin-bottom: 0;
+}
+
+label {
+    display: block;
+    line-height: 2em;
+    padding-top: 1em;
+}
+
+input, textarea, select, button {
+    font-family: inherit;
+    font-size: inherit;
+    height: 2em;
+    width: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
+    border: none;
+    box-shadow: 0px 1px 1px -3px black;
+    transition: box-shadow 0.5s ease-out;
+    border-radius: 3px;
+}
+
+textarea {
+    height: 8em;
+    padding: 10px;
+}
+
+form .error {
+    font-size: 12pt;
+    color: black;
+    text-decoration: none;
+
+    display: inline-block;
+    padding: 0.5em 5%;
+    margin: 0.2em 0;
+    border-radius: 2em;
+    
+    background-color: red;
+    width: 90%;
+}
+
+select, button {
+    transition: box-shadow 0.5s ease-out, background-color 0.25s ease;
+
+}
+
+select option {
+    background-color: white;
+}
+
+select {
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   appearance: none;
+}
+
+button {
+    font-size: 1.5em;
+    color: black;
+
+    width: 100%;
+    margin-top: 30px;
+    background-color: #f7f857;
+}
+
+input:hover, input:focus,
+textarea:hover, textarea:focus, 
+select:hover, select:focus,
+button:hover, button:focus {
+    outline-width: 0;
+    box-shadow: 0px 3px 15px -3px black;
+}
+
+.button {
+    font-size: 17pt;
+    color: black;
+    text-decoration: none;
+    background-color: #f7f857;
+    width: 100%;
+
+    display: inline-block;
+    padding: 0.5em 0em;
+    margin: 0.2em 0;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.notification {
+    font-size: 17pt;
+    color: white;
+    text-decoration: none;
+
+    display: inline-block;
+    padding: 0.5em 0em;
+    margin: 0.2em 0;
+    border-radius: 2em;
+    
+    background-color: black;
+    width: 100%;
+    text-align: center;
+}
+
+.red {
+    background-color: red;
+}
+
+.center {
+    margin-top: 15px;
+    text-align: center;
+}
+
+#page {
+    width: 90%;
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+.profile-list-element {
+    width: 100%;
+    background-color: #cff3d4;
+    border-radius: 2em;
+    margin: 1em 0 0 0; 
+}
+
+.profile-list-element a {
+    text-decoration: none;
+    color: black;
+    display: block;
+    padding: 1em;
+}
+
+.profile-list-element-self {
+    background-color: #419a4c;
+}
+
+#footer {
+    width: 90%;
+    max-width: 520px;
+    margin: 1em auto;
+    padding: 0.5em 0;
+    border-top: 1px solid black;
+    
+    text-align: center;
+}
+
+label[for="form_confirm"] {
+    display: inline;
+}
+
+input[type="checkbox"] {
+    height: initial;
+    width: initial;
+}

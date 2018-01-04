@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+        <title>{% block title %}Ernteteiler 1.0{% endblock %}</title>
+        {% block stylesheets %}
+            <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
+        {% endblock %}
+    </head>
+    <body>
+        <div id="page">
+            {% block body %}{% endblock %}
+        </div>
+        
+        <div id="footer">Bei fragen <a href="mailto:it@mehalsgmues.ch">it@mehalsgmues.ch</a></div>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

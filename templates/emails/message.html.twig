@@ -1,0 +1,13 @@
+<h3>Nachricht von {{ user.name }}</h3>
+
+<p>Hallo {{ profile.name }}! {{ user.name }} hat auf deinen Steckbrief geantwortet:</p>
+
+<p style="background-color: #85de90; padding: 1em">{{ message.message|nl2br }}</p>
+
+<p>Hier ist der <a href="{{ url( 'profile_contact', {'id': user.id} ) }}">Steckbrief von {{ user.name }}</a>:</p>
+
+<p style="background-color: #85de90; padding: 1em">{{ user.description|nl2br }}</p>
+
+<p>Du kannst direkt auf dieses E-mail antworten um {{ user.name }} zu schreiben.</p>
+
+<p>Viel Freude beim Teilen deines Ernteanteils.</p>

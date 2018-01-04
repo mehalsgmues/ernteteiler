@@ -1,0 +1,8 @@
+<h3>Dein Steckbrief wurde erstellt.</h3>
+
+<p>Hallo {{ profile.name }}! Dein Steckbrief wurde erfolgreich erstellt.<br>
+Über folgenden Link kannst du andere Steckbriefe ansehen und kontaktieren. Ausserdem kannst du deinen eigenen Steckbrief damit stets überarbeiten, oder löschen.</p>
+
+<p><a href="{{ url('login', {'key': profile.loginKey}) }}">Einloggen</a>.</p>
+
+<p>Viel Freude beim Teilen deines Ernteanteils.</p>
