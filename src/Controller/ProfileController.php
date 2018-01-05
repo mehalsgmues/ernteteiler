@@ -49,7 +49,7 @@ class ProfileController extends Controller
             $user = $auth->getUser();
             
             // send email
-            $email = (new \Swift_Message('Ernteverteiler: Anfrage'))
+            $email = (new \Swift_Message('Ernteteiler: Anfrage'))
                 ->setFrom('server@mehalsgmues.ch')
                 ->setTo( $profile->getEmail() )
                 ->setReplyTo( $user->getEmail() )
@@ -138,7 +138,7 @@ class ProfileController extends Controller
                 $profile->createKey();
                 
                 // send email
-                $message = (new \Swift_Message('Ernteverteiler: Steckbrief erstellt'))
+                $message = (new \Swift_Message('Ernteteiler: Steckbrief erstellt'))
                     ->setFrom('server@mehalsgmues.ch')
                     ->setTo($profile->getEmail())
                     ->setBody(

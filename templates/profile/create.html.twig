@@ -19,10 +19,10 @@
 <div class="notification">Änderungen wurden gespeichert!</div>
 {% endif %}
 {% else %}
-<h1>Der Ernteteiler <small style="font-size: 12pt">von meh als gmües</small></h1>
+<h1>Der Ernteteiler <small style="font-size: 12pt; display: inline-block;">von meh als gmües</small></h1>
 <p>Hallo Gmüesli.</p>
-<p>Der Ernteteiler wird dir dabei helfen, Gleichgesinnte zu finden, mit denen du deinen Ernteanteil bei meh als gmües teilen kannst. Wenn du neu hier bist, brauchst du erst einmal einen Steckbrief, damit die Anderen wissen, auf was sie sich da einlassen ;-). Danach kannst du auch die Steckbriefe der Anderen ansehen.<br>
-Falls du schon einen Steckbrief hast, kannst du dich über den Link einloggen, den du per E-mail erhalten hast. Ganz unten kannst du dir den Link erneut zusenden lassen, wenn du ihn verloren hast.</p>
+<p>Der Ernteteiler wird dir dabei helfen, Gleichgesinnte zu finden, mit denen du deinen (zukünftigen) Ernteanteil bei meh als gmües teilen kannst. Wenn du neu hier bist, brauchst du erst einmal einen Steckbrief, damit die Anderen wissen, auf was sie sich da einlassen ;-). Danach kannst du auch die Steckbriefe der Anderen lesen.<br>
+Falls du schon einen Steckbrief hast, kannst du dich über den Link einloggen, den du per E-mail erhalten hast. Ganz unten kannst du dir den Link erneut zusenden lassen, falls du ihn verloren hast.</p>
 <p>Viel Spass beim Teilen!</p>
 
 <h1>Erstelle einen Steckbrief</h1>
@@ -53,11 +53,11 @@ Falls du schon einen Steckbrief hast, kannst du dich über den Link einloggen, d
         <ul>
             <li>Depot von welchem du dein Gemüse beziehen willst. (Garten oder Hunziker-Areal)</li>
             <li>Dein ungefährer Wohnort (nächste Tram-/Bushaltestelle).</li>
-            <li>Mit wievielen Leuten möchtest du wieviele Ernteanteile teilen?</li>
-            <li>Wie möchtest du die Ernteanteile teilen? (z.B. Jede Woche abwechseln.)</li>
+            <li>Mit wie vielen Personen möchtest du wie viele Ernteanteile teilen? (z.B. 1 Ernteanteil zu zweit)</li>
+            <li>Wie möchtest du die Ernteanteile teilen? (z.B. Jede Woche abwechseln)</li>
             <li>Gemüse auf das du gerne verzichtest.</li>
-            <li>Gemüse auf das du auf keinen Fall verzichten willst.</li>
-            <li>Wie möchtest du die Kosten aufteilen?</li>
+            <li>Allenfalls: Dein Lieblingsgemüse.</li>
+            <li>Wie möchtest du die Kosten und die Einsätze aufteilen?</li>
         </ul>
         </small>
         {{ form_errors(form.description) }}
@@ -79,7 +79,7 @@ Falls du schon einen Steckbrief hast, kannst du dich über den Link einloggen, d
 {% if not loggedIn %}
 <h1>Einloggen</h1>
 <p>Wenn du bereits einen Steckbrief erstellt hast, kannst du dich über den Link im E-mail, das du erhalten hast, einloggen.</p>
-<p>Hast du das E-mail verloren kannst du es erneut senden an: </p>
+<p>Hast du das E-mail verloren kannst du es erneut senden lassen: </p>
 
 {{ form_start(login_form) }}
 
