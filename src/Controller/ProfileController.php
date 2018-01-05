@@ -170,8 +170,7 @@ class ProfileController extends Controller
             // show success message, if user is new and therefore not logged in yet.
             if( !$loggedIn )
             {
-                return $this->redirectToRoute('profile_created_success');
-                return $this->render('profile/success.html.twig');
+                return $this->redirectToRoute('profile_create_success');
             }
             
             $form_success = true;
