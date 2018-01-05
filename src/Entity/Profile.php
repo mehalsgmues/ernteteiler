@@ -21,7 +21,7 @@ class Profile
     private $id;
 
     /**
-     * @ORM\Column(type="guid", length=36, unique=true)
+     * @ORM\Column(type="string", length=36, unique=true)
      */
     private $loginKey;
     
