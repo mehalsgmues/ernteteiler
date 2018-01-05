@@ -182,6 +182,6 @@ class Profile
      */
     public function isAdmin()
     {
-        return $this->id == 0;
+        return $this->id == $_SERVER['ADMIN_ID'];
     }
 }
