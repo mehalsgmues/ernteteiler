@@ -6,3 +6,5 @@
 <p><a href="{{ url('login', {'key': profile.loginKey}) }}">Einloggen</a>.</p>
 
 <p>Viel Freude beim Teilen deines Ernteanteils.</p>
+
+<p>PS: Vergiss nicht deinen Steckbrief wieder zu löschen, wenn du ihn nicht mehr brauchst. Das kannst du hier tun: <a href="{{ url('login', {'key': profile.loginKey }) }}?redirect={{ path( 'profile_delete' )}}">Steckbrief löschen</a>.</p>

@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 use App\Entity\Profile;
@@ -16,7 +17,7 @@ class UserController extends Controller
     /**
      * @Route("/login/{key}", name="login")
      */
-    public function login($key, SessionInterface $session)
+    public function login($key, Request $request, SessionInterface $session)
     {
         // try to login user with key
         $user = $this->getDoctrine()
@@ -38,8 +39,8 @@ class UserController extends Controller
             $session->set('user', $key);
             
             // return new Response($session->get('user'));
-            // redirect homepage
-            return $this->redirectToRoute('homepage');
+            // redirect to page
+            return new RedirectResponse($request->query->get('redirect','/'));
         }
         
         return $this->render('user/notFound.html.twig');

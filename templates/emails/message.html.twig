@@ -4,10 +4,12 @@
 
 <p style="background-color: #85de90; padding: 1em">{{ message.message|nl2br }}</p>
 
-<p>Hier ist der <a href="{{ url( 'profile_contact', {'id': user.id} ) }}">Steckbrief von {{ user.name }}</a>:</p>
+<p>Hier ist der <a href="{{ url('login', {'key': profile.loginKey}) }}?redirect={{ path( 'profile_contact', {'id': user.id} ) }}">Steckbrief von {{ user.name }}</a>:</p>
 
 <p style="background-color: #85de90; padding: 1em">{{ user.description|nl2br }}</p>
 
 <p>Du kannst direkt auf dieses E-mail antworten um {{ user.name }} zu schreiben.</p>
 
 <p>Viel Freude beim Teilen deines Ernteanteils.</p>
+
+<p>PS: Vergiss nicht deinen Steckbrief wieder zu löschen, wenn du ihn nicht mehr brauchst. Das kannst du hier tun: <a href="{{ url('login', {'key': profile.loginKey }) }}?redirect={{ path( 'profile_delete' )}}">Steckbrief löschen</a>.</p>
