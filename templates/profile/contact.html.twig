@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+{% if admin|default(false) %}
+<a class="button red" href="{{ path('profile_admin', {'userid' : profile.id}) }}">Als Admin bearbeiten</a>
+{% endif %}
 <h1>{{ profile.name }}</h1>
 <p>{{ profile.description|nl2br }}</p>
 <br>

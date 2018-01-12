@@ -73,7 +73,7 @@ Falls du schon einen Steckbrief hast, kannst du dich über den Link einloggen, d
 {% if loggedIn %}
 <a class="button" href="{{ path('homepage') }}">Zurück zur Übersicht</a>
 <h1>Steckbrief löschen</h1>
-<a class="button red" href="{{ path('profile_delete') }}">Steckbrief löschen</a>
+<a class="button red" href="{{ admin ? path('profile_delete_admin', { 'userid' : userid }) : path('profile_delete') }}">Steckbrief löschen</a>
 {% endif %}
 
 {% if not loggedIn %}

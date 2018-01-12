@@ -8,7 +8,7 @@
             <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
         {% endblock %}
     </head>
-    <body>
+    <body {{ admin|default(false) ? 'class="admin"' : '' }}>
         <div id="page">
             {% block body %}{% endblock %}
         </div>

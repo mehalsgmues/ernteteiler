@@ -82,15 +82,18 @@ class ProfileController extends Controller
             'profile' => $profile,
             'contact' => $form->createView(),
             'message_sent' => $message_sent,
+            'admin' => $auth->getUser()->isAdmin(),
         ]);
     }
     
     /**
      * @Route("/profile/create", name="profile_create")
      * @Route("/profile/update", name="profile_update")
+     * @Route("/profile/update/{userid}", name="profile_admin")
      */
-    public function create( Request $request, Auth $auth, \Swift_Mailer $mailer )
+    public function create( $userid = false, Request $request, Auth $auth, \Swift_Mailer $mailer )
     {
+        $admin = false;
         $em = $this->getDoctrine()->getManager();
     
         // If user is logged in, edit existing profile
@@ -99,8 +102,17 @@ class ProfileController extends Controller
         {
             $profile = $auth->getUser();
             $send_label = 'Änderungen speichern';
-            
             $login_form = false;
+            // admin access
+            if( $profile->isAdmin() && $userid !== false ) {
+                $profile = $this->getDoctrine()
+                    ->getRepository(Profile::class)
+                    ->find($userid);
+                if( !$profile ) {
+                    throw $this->createNotFoundException('Benutzer existiert nicht');
+                }
+                $admin = true;
+            }
         }
         else
         {
@@ -180,6 +192,8 @@ class ProfileController extends Controller
             'form' => $form->createView(),
             'loggedIn' => $loggedIn,
             'form_success' => $form_success,
+            'admin' => $admin,
+            'userid' => $userid,
         );
         if( !$loggedIn )
         {
@@ -203,14 +217,28 @@ class ProfileController extends Controller
      
     /**
      * @Route("/profile/delete", name="profile_delete")
+     * @Route("/profile/delete/{userid}", name="profile_delete_admin")
      */
-    public function delete( Request $request, Auth $auth, \Swift_Mailer $mailer )
+    public function delete( $userid = false, Request $request, Auth $auth, \Swift_Mailer $mailer )
     {
         if( !$auth->requreLogin() )
         {
             return $this->redirectToRoute('homepage');
         }
-    
+        
+        $admin = false;
+        $user = $auth->getUser();
+        // admin access
+        if( $user->isAdmin() && $userid !== false ) {
+            $user = $this->getDoctrine()
+                ->getRepository(Profile::class)
+                ->find($userid);
+            if( !$user ) {
+                throw $this->createNotFoundException('Benutzer existiert nicht');
+            }
+            $admin = true;
+        }
+
         $confirm = new ConfirmDelete();
 
         $form = $this->createFormBuilder($confirm)
@@ -222,10 +250,9 @@ class ProfileController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {  
             // Profil löschen
-            $user = $auth->getUser();
             if( !$user->isAdmin() ) { // Der Admin ist unlöschbar
                 $em = $this->getDoctrine()->getManager();
-                $em->remove( $auth->getUser() );
+                $em->remove( $user );
                 $em->flush();
             }
             
@@ -235,6 +262,8 @@ class ProfileController extends Controller
         
         return $this->render('profile/delete.html.twig', array(
             'form' => $form->createView(),
+            'admin' => $admin,
+            'userid' => $userid,
         ));
     }
 }

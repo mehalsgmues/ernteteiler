@@ -25,11 +25,18 @@ class DefaultController extends Controller
 
         // get all profiles
         $profiles = $this->getDoctrine()->getRepository('App:Profile')->findBy(['confirmed' => true]);
+        
+        // admin mode: get profiles, that are not confirmed too
+        $unconfirmed = [];
+        if( $auth->getUser()->isAdmin() ) {
+            $unconfirmed = $this->getDoctrine()->getRepository('App:Profile')->findBy(['confirmed' => null]);
+        }
     
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
             'profiles' => $profiles,
             'user' => $auth->getUser(),
+            'unconfirmed' => $unconfirmed,
         ]);
     }
 }

@@ -4,6 +4,10 @@ body {
     background-color: #85de90;
 }
 
+body.admin {
+    background-color: #f8842a;
+}
+
 span.avoidwrap {
     display: inline-block;
 }
@@ -157,6 +161,10 @@ button:hover, button:focus {
 
 .profile-list-element-self {
     background-color: #419a4c;
+}
+
+.profile-list-element-unconfirmed {
+    background-color: #f8842a;
 }
 
 #footer {

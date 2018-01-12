@@ -17,5 +17,5 @@
 {{ form_widget(form) }}
 
 {{ form_end(form) }}
-<a class="button" href="{{ path('profile_update') }}">Steckbrief behalten</a>
+<a class="button" href="{{ admin ? path('profile_admin', {'userid' : userid}) : path('profile_update') }}">Steckbrief behalten</a>
 {% endblock %}
