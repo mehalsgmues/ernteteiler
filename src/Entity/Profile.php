@@ -21,6 +21,21 @@ class Profile
     private $id;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateCreated;
+    
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateConfirmed;
+    
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateLastChanged;
+
+    /**
      * @ORM\Column(type="string", length=36, unique=true)
      */
     private $loginKey;
@@ -45,6 +60,11 @@ class Profile
      * @ORM\Column(type="text")
      */
     private $description;
+    
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $public;
     
     /**
      * create admin key 
@@ -79,6 +99,79 @@ class Profile
     }
     
     /**
+     * Get dateCreated
+     *
+     * @return date
+     */
+    public function getDateCreated()
+    {
+        return $this->dateCreated;
+    }
+    
+    
+    /**
+     * Set dateCreated
+     *
+     * @param date $dateCreated
+     *
+     * @return Profile
+     */
+    public function setDateCreated($dateCreated)
+    {
+        $this->dateCreated = $dateCreated;
+
+        return $this;
+    }
+
+    /**
+     * Get dateConfirmed
+     *
+     * @return date
+     */
+    public function getDateConfirmed()
+    {
+        return $this->dateConfirmed;
+    }
+    
+    /**
+     * Set dateConfirmed
+     *
+     * @param date $dateConfirmed
+     *
+     * @return Profile
+     */
+    public function setDateConfirmed($dateConfirmed)
+    {
+        $this->dateConfirmed = $dateConfirmed;
+
+        return $this;
+    }
+    
+    /**
+     * Get dateLastChanged
+     *
+     * @return date
+     */
+    public function getDateLastChanged()
+    {
+        return $this->dateLastChanged;
+    }
+    
+    /**
+     * Set dateLastChanged
+     *
+     * @param date $dateLastChanged
+     *
+     * @return Profile
+     */
+    public function setDateLastChanged($dateLastChanged)
+    {
+        $this->dateLastChanged = $dateLastChanged;
+
+        return $this;
+    }
+
+    /**
      * confirm
      *
      * @param string $name
@@ -87,6 +180,11 @@ class Profile
      */
     public function confirm()
     {
+        if( !$this->confirmed ) {
+            // safe date of confirmation
+            $this->setDateConfirmed(new \DateTime());
+        }
+    
         $this->confirmed = true;
 
         return $this;
@@ -173,6 +271,28 @@ class Profile
     public function getDescription()
     {
         return $this->description;
+    }
+    
+    /**
+     * Set public
+     *
+     * @return bool
+     */
+    public function setPublic($public)
+    {
+        $this->public = $public;
+
+        return $this;
+    }
+    
+    /**
+     * Get public
+     *
+     * @return bool
+     */
+    public function isPublic()
+    {
+        return $this->public;
     }
     
     /**

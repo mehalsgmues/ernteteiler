@@ -17,8 +17,21 @@
     {{ form_errors(contact) }}
     
     <div>
-        {{ form_label(contact.message, 'Sende eine Nachricht an ' ~ profile.name) }}
-        <small>Deine Email-Adresse und dein Steckbrief werden an {{ profile.name }} mitgesendet.</small>
+        
+        {% if not loggedIn %}
+            {{ form_label(contact.name, 'Deine Name') }}
+            <small>Der Vorname reicht.</small>
+            {{ form_errors(contact.name) }}
+            {{ form_widget(contact.name) }}
+            {{ form_label(contact.email, 'Deine E-Mail-Adresse') }}
+            <small>Damit sich {{ profile.name }} bei dir melden kann.</small>
+            {{ form_errors(contact.email) }}
+            {{ form_widget(contact.email) }}
+            {{ form_label(contact.message, 'Nachricht an ' ~ profile.name) }}
+        {% else %}
+            {{ form_label(contact.message, 'Sende eine Nachricht an ' ~ profile.name) }}
+            <small>Deine E-Mail-Adresse und dein Steckbrief werden an {{ profile.name }} mitgesendet.</small>
+        {% endif %}
         {{ form_errors(contact.message) }}
         {{ form_widget(contact.message) }}
     </div>

@@ -15,7 +15,10 @@ Klicke auf einen Steckbrief um die Person zu kontaktieren.
         {% if not profile.admin %}
 <div class="profile-list-element profile-list-element-unconfirmed ">
     <a href="{{ path('profile_admin', {'userid' : profile.id}) }}">
-    <small style="font-style: italic;">Unbestätigter Eintrag:</small><br>
+        <small style="font-style: italic;">Unbestätigter Eintrag: {{ profile.loginKey }}</small><br>
+        <small style="font-style: italic;"><b>Erstellt am: </b>{{ profile.dateCreated is empty ? "Unbekannt" : profile.dateCreated|date("d.m.Y H:i:s") }}<br>
+        <b>Bestätigt am: </b>{{ profile.dateConfirmed is empty ? "Unbekannt" : profile.dateConfirmed|date("d.m.Y H:i:s") }}<br>
+        <b>Zuletzt geändert am: </b>{{ profile.dateLastChanged is empty ? "Unbekannt" : profile.dateLastChanged|date("d.m.Y H:i:s") }}<br></small>
         <b>{{ profile.name }}</b>:<br> {{ profile.description|length > 200 ? (profile.description|slice(0, 200) ~ '...')|nl2br : profile.description|nl2br }}
     </a>
 </div>
@@ -34,6 +37,13 @@ Klicke auf einen Steckbrief um die Person zu kontaktieren.
 <div class="profile-list-element">
     <a href="{{ path('profile_contact', {'id': profile.id}) }}">
 {% endif %}
+        {% if user.admin %}
+            <small style="font-style: italic;"><b>Erstellt am: </b>{{ profile.dateCreated is empty ? "Unbekannt" : profile.dateCreated|date("d.m.Y H:i:s") }}<br>
+            <b>Bestätigt am: </b>{{ profile.dateConfirmed is empty ? "Unbekannt" : profile.dateConfirmed|date("d.m.Y H:i:s") }}<br>
+            <b>Zuletzt geändert am: </b>{{ profile.dateLastChanged is empty ? "Unbekannt" : profile.dateLastChanged|date("d.m.Y H:i:s") }}<br></small>
+        {% elseif profile.dateLastChanged is not empty %}
+            <small style="font-style: italic;"><b>Zuletzt geändert am: </b>{{ profile.dateLastChanged|date("d.m.Y") }}<br></small>
+        {% endif %}
         <b>{{ profile.name }}</b>:<br> {{ profile.description|length > 200 ? (profile.description|slice(0, 200) ~ '...')|nl2br : profile.description|nl2br }}
     </a>
 </div>

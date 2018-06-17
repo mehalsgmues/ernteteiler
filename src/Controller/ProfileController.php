@@ -27,7 +27,8 @@ class ProfileController extends Controller
     public function contact( Profile $profile, Request $request, Auth $auth, \Swift_Mailer $mailer )
     {
         // If user is not logged in, redirect
-        if( !$auth->requreLogin() )
+        $loggedIn = $auth->requreLogin();
+        if( !$loggedIn && !$profile->isPublic() )
         {
             return $this->redirectToRoute('profile_create');
         }
@@ -35,10 +36,14 @@ class ProfileController extends Controller
         // get this profiles
         //$profiles = $this->getDoctrine()->getRepository('App:Profile')->findAll();
         $message = new Message();
-        $form = $this->createFormBuilder($message) 
-            ->add('message', TextareaType::class)
-            ->add('send', SubmitType::class, array('label' => 'Senden'))
-            ->getForm();
+        $form_builder = $this->createFormBuilder($message);
+        if( !$loggedIn ) {
+            $form_builder->add('name', TextType::class);
+            $form_builder->add('email', EmailType::class);
+        }
+        $form_builder->add('message', TextareaType::class);
+        $form_builder->add('send', SubmitType::class, array('label' => 'Senden'));
+        $form = $form_builder->getForm();
     
         $form->handleRequest($request);
 
@@ -49,18 +54,33 @@ class ProfileController extends Controller
             $user = $auth->getUser();
             
             // send email
-            $email = (new \Swift_Message('Ernteteiler: Anfrage'))
-                ->setFrom('server@mehalsgmues.ch')
-                ->setTo( $profile->getEmail() )
-                ->setReplyTo( $user->getEmail() )
-                ->setBody(
-                    $this->renderView(
-                        // templates/emails/registration.html.twig
-                        'emails/message.html.twig',
-                        array('profile' => $profile, 'user' => $user, 'message' => $message)
-                    ),
-                    'text/html'
-                )
+            if( $loggedIn ) {
+                $email = (new \Swift_Message('Ernteteiler: Anfrage'))
+                    ->setFrom('server@mehalsgmues.ch')
+                    ->setReplyTo( $user->getEmail() )
+                    ->setTo( $profile->getEmail() )
+                    ->setBody(
+                        $this->renderView(
+                            // templates/emails/message.html.twig
+                            'emails/message.html.twig',
+                            array('profile' => $profile, 'user' => $user, 'message' => $message)
+                        ),
+                        'text/html'
+                    );
+            } else {
+                $email = (new \Swift_Message('Ernteteiler: Anfrage'))
+                    ->setFrom('server@mehalsgmues.ch')
+                    ->setReplyTo( $message->getEmail() )
+                    ->setTo( $profile->getEmail() )
+                    ->setBody(
+                        $this->renderView(
+                            // templates/emails/message_public.html.twig
+                            'emails/message_public.html.twig',
+                            array('profile' => $profile, 'message' => $message)
+                        ),
+                        'text/html'
+                    );
+            }
                 /*
                  * If you also want to include a plaintext version of the message
                 ->addPart(
@@ -77,13 +97,18 @@ class ProfileController extends Controller
             $message_sent = true;
         }
     
-        // render page
-        return $this->render('profile/contact.html.twig', [
+        $params = [
             'profile' => $profile,
             'contact' => $form->createView(),
             'message_sent' => $message_sent,
-            'admin' => $auth->getUser()->isAdmin(),
-        ]);
+            'loggedIn' => $loggedIn,
+            'admin' => false
+        ];
+        if($loggedIn) {
+            $params['admin'] = $auth->getUser()->isAdmin();
+        }
+        // render page
+        return $this->render('profile/contact.html.twig', $params);
     }
     
     /**
@@ -133,6 +158,7 @@ class ProfileController extends Controller
             ->add('name', TextType::class)
             ->add('email', EmailType::class)
             ->add('description', TextareaType::class)
+            ->add('public', CheckboxType ::class, array('required' => false))
             ->add('create', SubmitType::class, array('label' => $send_label))
             ->getForm();
 
@@ -144,10 +170,16 @@ class ProfileController extends Controller
             // Safe profile
             $profile = $form->getData();
             
+            // Safe date of last change
+            $profile->setDateLastChanged(new \DateTime());
+            
             // If new create key and send email to user
             if( !$loggedIn )
             {
                 $profile->createKey();
+                
+                // safe date of creation
+                $profile->setDateCreated(new \DateTime());
                 
                 // send email
                 $message = (new \Swift_Message('Ernteteiler: Steckbrief erstellt'))
@@ -188,12 +220,16 @@ class ProfileController extends Controller
             $form_success = true;
         }
 
+        // get all public profiles
+        $profiles = $this->getDoctrine()->getRepository('App:Profile')->findBy(['confirmed' => true, 'public' => true], array('dateLastChanged' => 'DESC'));
+
         $params = array(
             'form' => $form->createView(),
             'loggedIn' => $loggedIn,
             'form_success' => $form_success,
             'admin' => $admin,
             'userid' => $userid,
+            'profiles' => $profiles,
         );
         if( !$loggedIn )
         {

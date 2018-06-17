@@ -25,6 +25,23 @@
 Falls du schon einen Steckbrief hast, kannst du dich über den Link einloggen, den du per E-mail erhalten hast. Ganz unten kannst du dir den Link erneut zusenden lassen, falls du ihn verloren hast.</p>
 <p>Viel Spass beim Teilen!</p>
 
+<h2>Öffentliche Steckbriefe</h2>
+{% if profiles|length == 0 %}
+Derzeit hat es keine öffentlichen Steckbriefe.
+{% else %}
+Klicke auf einen Steckbrief um die Person zu kontaktieren.
+
+{% for profile in profiles %}
+{% if not profile.admin %}
+<div class="profile-list-element">
+    <a href="{{ path('profile_contact', {'id': profile.id}) }}">
+{% endif %}
+        <b>{{ profile.name }}</b>:<br> {{ profile.description|length > 200 ? (profile.description|slice(0, 200) ~ '...')|nl2br : profile.description|nl2br }}
+    </a>
+</div>
+{% endfor %}
+{% endif %}
+
 <h1>Erstelle einen Steckbrief</h1>
 <p>Erstelle deinen Steckbrief um die anderen Steckbriefe sehen zu können. Oder logge dich unten ein, wenn du schon einen Steckbrief erstellt hast.</p>
 {% endif %}
@@ -62,6 +79,13 @@ Falls du schon einen Steckbrief hast, kannst du dich über den Link einloggen, d
         </small>
         {{ form_errors(form.description) }}
         {{ form_widget(form.description) }}
+    </div>
+    
+    <div>
+        {{ form_label(form.public, 'Sichtbarkeit') }}
+        {{ form_errors(form.public) }}
+        {{ form_widget(form.public) }} <label for="form_public" style="display: inline; font-size: 12pt;">Öffentlich sichtbar machen.</label>
+        <small>Dadurch können auch jene deinen Steckbrief sehen, die selbst keinen Steckbrief haben. Deine E-Mail-Adresse bleibt verborgen.</small>
     </div>
 
     <div>

@@ -24,7 +24,7 @@ class DefaultController extends Controller
         }
 
         // get all profiles
-        $profiles = $this->getDoctrine()->getRepository('App:Profile')->findBy(['confirmed' => true]);
+        $profiles = $this->getDoctrine()->getRepository('App:Profile')->findBy(['confirmed' => true], array('dateLastChanged' => 'DESC'));
         
         // admin mode: get profiles, that are not confirmed too
         $unconfirmed = [];
