@@ -89,6 +89,12 @@ Klicke auf einen Steckbrief um die Person zu kontaktieren.
     </div>
 
     <div>
+        {{ form_label(form.captchaCode) }}
+        {{ form_errors(form.captchaCode) }}
+        {{ form_widget(form.captchaCode) }}
+    </div>
+
+    <div>
         {{ form_widget(form.create) }}
     </div>
 

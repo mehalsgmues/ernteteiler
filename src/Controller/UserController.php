@@ -64,7 +64,7 @@ class UserController extends Controller
         
             // send email
             $message = (new \Swift_Message('Ernteteiler: Dein Login'))
-                ->setFrom('server@mehalsgmues.ch')
+                ->setFrom('teiler-server@mehalsgmues.ch')
                 ->setTo($user->getEmail())
                 ->setBody(
                     $this->renderView(

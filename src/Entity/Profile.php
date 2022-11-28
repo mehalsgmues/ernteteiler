@@ -7,6 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
+use Captcha\Bundle\CaptchaBundle\Validator\Constraints as CaptchaAssert;
+
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProfileRepository")
  * @UniqueEntity(fields="email", message="Diese E-mail wird schon benutzt. Benutze das Formular ganz unten.")
@@ -304,4 +307,22 @@ class Profile
     {
         return $this->id == $_SERVER['ADMIN_ID'];
     }
+
+  /**
+   * @CaptchaAssert\ValidCaptcha(
+   *      message = "Falscher Code, versuche es erneut."
+   * )
+   */
+  protected $captchaCode;
+
+  public function getCaptchaCode()
+  {
+    return $this->captchaCode;
+  }
+
+  public function setCaptchaCode($captchaCode)
+  {
+    $this->captchaCode = $captchaCode;
+  }
+
 }

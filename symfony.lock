@@ -1,4 +1,7 @@
 {
+    "carlos-mg89/symfony-captcha-bundle": {
+        "version": "4.2.21"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {

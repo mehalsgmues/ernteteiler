@@ -19,6 +19,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
+use Captcha\Bundle\CaptchaBundle\Form\Type\CaptchaType;
+use Captcha\Bundle\CaptchaBundle\Validator\Constraints\ValidCaptcha;
+
+
 class ProfileController extends Controller
 {
     /**
@@ -56,7 +60,7 @@ class ProfileController extends Controller
             // send email
             if( $loggedIn ) {
                 $email = (new \Swift_Message('Ernteteiler: Anfrage'))
-                    ->setFrom('server@mehalsgmues.ch')
+                    ->setFrom('teiler-server@mehalsgmues.ch')
                     ->setReplyTo( $user->getEmail() )
                     ->setTo( $profile->getEmail() )
                     ->setBody(
@@ -69,7 +73,7 @@ class ProfileController extends Controller
                     );
             } else {
                 $email = (new \Swift_Message('Ernteteiler: Anfrage'))
-                    ->setFrom('server@mehalsgmues.ch')
+                    ->setFrom('teiler-server@mehalsgmues.ch')
                     ->setReplyTo( $message->getEmail() )
                     ->setTo( $profile->getEmail() )
                     ->setBody(
@@ -159,6 +163,10 @@ class ProfileController extends Controller
             ->add('email', EmailType::class)
             ->add('description', TextareaType::class)
             ->add('public', CheckboxType ::class, array('required' => false))
+            ->add('captchaCode', CaptchaType::class, [
+                  'captchaConfig' => 'ExampleCaptcha',
+                  'label' => 'Spamschutz'
+            ])
             ->add('create', SubmitType::class, array('label' => $send_label))
             ->getForm();
 
@@ -183,7 +191,7 @@ class ProfileController extends Controller
                 
                 // send email
                 $message = (new \Swift_Message('Ernteteiler: Steckbrief erstellt'))
-                    ->setFrom('server@mehalsgmues.ch')
+                    ->setFrom('teiler-server@mehalsgmues.ch')
                     ->setTo($profile->getEmail())
                     ->setBody(
                         $this->renderView(

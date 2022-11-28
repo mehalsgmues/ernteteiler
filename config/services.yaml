@@ -23,3 +23,8 @@ services:
     App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
+
+
+    Captcha\Bundle\CaptchaBundle\Controller\:
+        resource: '../vendor/carlos-mg89/symfony-captcha-bundle/Controller'
+        autowire: true
